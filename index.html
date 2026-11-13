@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<title>Chemical-Seed adventi naptár – 24 nap, 24 meglepetés</title>
+<meta name="description" content="Nyisd ki minden nap az adventi ablakot, és fedezd fel napi alkatrész- és szervizajánlatainkat! December 1–24.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0a1a3a; --navy2:#10265a; --navy3:#16346f;
+  --amber:#f7b119; --amber-d:#b5820b; --white:#fff;
+  --muted:#b9c6e4; --line:rgba(247,177,25,.55);
+  /* KÉPHELYEK – ide kerülnek a végleges háttérképek (lásd a méretajánlást):
+     --bg-img: url('img/bg-desktop.webp');  --hero-img: url('img/hero.webp'); */
+  --bg-img: none; --hero-img: none;
+  --f-head:'Archivo Black','Arial Black',Impact,sans-serif;
+  --f-body:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--f-body);color:var(--white);background:var(--navy);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button{font:inherit;color:inherit;cursor:pointer}
+
+/* ---------- háttér (fix réteg: iOS-en is stabil görgetésnél) ---------- */
+.bg{position:fixed;inset:0;z-index:-2;background:
+  var(--bg-img) center/cover no-repeat,
+  radial-gradient(120% 80% at 70% 0%,#1b3d86 0%,rgba(27,61,134,0) 60%),
+  linear-gradient(180deg,#0b1d45 0%,#08142f 100%)}
+.bg::before{content:"";position:absolute;inset:-200px 0 0 0;
+  background-image:
+   radial-gradient(2px 2px at 20px 30px,#fff,transparent 60%),
+   radial-gradient(1.5px 1.5px at 90px 120px,#fff,transparent 60%),
+   radial-gradient(2.5px 2.5px at 160px 60px,#fff,transparent 60%),
+   radial-gradient(1.5px 1.5px at 230px 180px,#fff,transparent 60%),
+   radial-gradient(2px 2px at 300px 100px,#fff,transparent 60%);
+  background-size:320px 220px;opacity:.55;animation:snow 22s linear infinite}
+@keyframes snow{to{transform:translateY(220px)}}
+.bg::after{content:"";position:absolute;left:0;right:0;bottom:0;height:200px;opacity:.9;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='200' viewBox='0 0 360 200'%3E%3Cg fill='%23071531'%3E%3Cpath d='M40 200l30-90-14 0 24-60 24 60-14 0 30 90z'/%3E%3Cpath d='M170 200l24-70-10 0 20-50 20 50-10 0 24 70z'/%3E%3Cpath d='M290 200l32-100-14 0 26-70 26 70-14 0 32 100z'/%3E%3C/g%3E%3C/svg%3E") repeat-x bottom/360px 200px}
+@media (prefers-reduced-motion:reduce){.bg::before{animation:none}.door.today .plate,.door.today{animation:none!important}}
+
+/* ---------- fejléc ---------- */
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+header.top{position:sticky;top:0;z-index:30;background:rgba(8,20,47,.88);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08)}
+.top .wrap{display:flex;align-items:center;gap:22px;height:64px}
+.logo{font-family:var(--f-head);font-style:italic;font-size:22px;letter-spacing:.5px;color:#fff;text-decoration:none;white-space:nowrap}
+.logo b{color:var(--amber);font-weight:400}
+nav{display:flex;gap:6px;margin-left:8px}
+nav a{color:#fff;text-decoration:none;font-weight:600;font-size:14px;padding:8px 14px;border-left:2px solid var(--amber);text-transform:uppercase;letter-spacing:.04em}
+nav a:hover{color:var(--amber)}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--amber);color:#111;border:0;border-radius:10px;padding:12px 20px;font-weight:700;font-size:15px;text-decoration:none;text-transform:uppercase;letter-spacing:.03em;transition:transform .15s,filter .15s}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.06)}
+.btn.ghost{background:transparent;color:#fff;border:1.5px solid var(--amber)}
+.btn.sm{padding:9px 14px;font-size:13px}
+.top .btn{margin-left:auto}
+
+/* ---------- hero ---------- */
+.hero{padding:44px 0 26px;position:relative}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:center}
+h1{font-family:var(--f-head);font-weight:400;font-size:clamp(34px,5.2vw,64px);line-height:1.04;letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--amber);display:block}
+.lead{margin:18px 0 20px;font-size:clamp(15px,1.6vw,19px);color:#e6edff;max-width:560px}
+.chip{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#111;font-weight:800;padding:10px 16px;border-radius:9px;text-transform:uppercase;letter-spacing:.03em}
+.chip .i{font-size:22px}
+.hero-art{position:relative;aspect-ratio:2.4/1;min-width:0;border-radius:18px;
+  background:var(--hero-img) center/cover no-repeat,linear-gradient(135deg,rgba(22,52,111,.7),rgba(10,26,58,.2));
+  border:1px solid rgba(247,177,25,.25);display:grid;place-items:center;overflow:hidden}
+.hero-art .i{font-size:clamp(90px,14vw,170px);color:var(--amber);stroke-width:1.1;opacity:.9}
+.hero-art small{position:absolute;right:12px;bottom:8px;font-size:11px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+
+/* ---------- banner + visszaszámláló ---------- */
+.ribbon{position:relative;margin:26px auto 22px;text-align:center}
+.ribbon span{display:inline-flex;align-items:center;gap:14px;background:var(--amber);color:#111;font-family:var(--f-head);font-size:clamp(15px,2.4vw,26px);text-transform:uppercase;padding:12px 38px;clip-path:polygon(14px 0,calc(100% - 14px) 0,100% 100%,0 100%)}
+.ribbon .i{font-size:1.1em}
+.count{margin-top:12px;color:var(--muted);font-size:14px;min-height:21px}
+.count b{color:#fff;font-variant-numeric:tabular-nums}
+
+/* ---------- ajtók ---------- */
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;padding-bottom:10px}
+.door{position:relative;aspect-ratio:2.25/1;border:0;background:none;padding:0;text-align:left;perspective:600px}
+.plate{position:absolute;inset:0;border-radius:10px;border:2px solid var(--line);
+  background:linear-gradient(160deg,#17356f 0%,#0e2250 60%,#0a1a3e 100%);
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,.22),0 8px 18px rgba(0,0,0,.35);
+  display:flex;align-items:center;justify-content:space-between;padding:0 16%;transition:transform .35s,box-shadow .25s,border-color .25s,opacity .25s}
+.plate::before{content:"";position:absolute;left:0;right:0;top:0;height:9px;border-radius:9px 9px 0 0;background:linear-gradient(#fff,#cfdcf5);opacity:.85}
+.plate::after{content:"";position:absolute;inset:6px;border-radius:6px;border:1px dashed rgba(255,255,255,.08);pointer-events:none}
+.num{font-family:var(--f-head);font-size:clamp(24px,3.1vw,40px);font-style:italic;line-height:1;letter-spacing:-.01em}
+.deco{font-size:clamp(18px,2vw,26px);color:#e8f1ff;opacity:.92}
+.deco.b{color:#ff5a5a}.deco.p{color:#8fd19e}
+.door:hover .plate{transform:translateY(-2px)}
+.door:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:12px}
+
+.door.future .plate{opacity:.55}
+.door.future .lock{position:absolute;right:10px;bottom:8px;font-size:15px;color:var(--muted)}
+.door.future:hover .plate{transform:none}
+.door.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+
+.door.today .plate{border-color:var(--amber);animation:glow 2s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:inset 0 0 0 3px rgba(0,0,0,.22),0 0 0 0 rgba(247,177,25,.0),0 8px 18px rgba(0,0,0,.35)}50%{box-shadow:inset 0 0 0 3px rgba(0,0,0,.22),0 0 26px 4px rgba(247,177,25,.55),0 8px 18px rgba(0,0,0,.35)}}
+.tag-today{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--amber);color:#111;font-weight:800;font-size:11px;letter-spacing:.08em;padding:2px 10px;border-radius:20px;text-transform:uppercase;z-index:2}
+
+/* kinyitott állapot */
+.door .inside{display:none}
+.door.opened .plate{display:none}
+.door.opened .inside{display:block;position:absolute;inset:0;border-radius:10px;overflow:hidden;border:2px solid var(--line);
+  background:radial-gradient(90% 120% at 60% 50%,#ffe39a 0%,#f7b119 38%,#9a6a05 100%)}
+.door.opened .flap{position:absolute;left:0;top:0;bottom:0;width:30%;display:grid;place-items:center;background:linear-gradient(160deg,#17356f,#0a1a3e);border-right:2px solid var(--line);
+  transform-origin:left;transform:perspective(300px) rotateY(-28deg);font-family:var(--f-head);font-style:italic;font-size:clamp(16px,2vw,26px);box-shadow:6px 0 14px rgba(0,0,0,.4)}
+.door.opened .prod{position:absolute;left:30%;right:0;top:0;bottom:0;display:grid;place-items:center;color:#2b1d00}
+.door.opened .prod img{width:100%;height:100%;object-fit:cover;display:block}
+.door.opened .prod .i{font-size:clamp(28px,4vw,48px);stroke-width:1.4;filter:drop-shadow(0 2px 3px rgba(255,255,255,.4))}
+.door.opened .badge{position:absolute;right:6px;bottom:5px;background:#0a1a3a;color:var(--amber);font-weight:800;font-size:clamp(10px,1.1vw,13px);padding:3px 8px;border-radius:6px;transform:rotate(-4deg);border:1px solid var(--amber)}
+.door.past.opened .inside{filter:grayscale(.75) brightness(.75)}
+.door.past.opened .badge{background:#222;color:#ddd;border-color:#999}
+.door.grand .plate,.door.grand.opened .inside{border-color:#ffd56b}
+.door.grand:not(.opened) .num{color:var(--amber)}
+
+/* ---------- jegyzet + lábléc ---------- */
+.note{margin:22px 0 0;text-align:center;color:var(--muted);font-size:13px}
+.facts{margin-top:34px;background:rgba(6,14,36,.9);border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)}
+.facts .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.fact{display:flex;align-items:center;justify-content:center;gap:14px;padding:22px 10px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;font-size:15px}
+.fact + .fact{border-left:2px solid var(--amber)}
+.fact .i{font-size:34px;color:var(--amber);stroke-width:1.4}
+footer{background:#050d22;padding:30px 0 90px;color:var(--muted);font-size:13px}
+footer .sites{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px}
+footer .sites span{display:inline-flex;align-items:center;gap:6px}
+footer .sites .i{color:var(--amber)}
+
+/* ---------- modal ---------- */
+.ov{position:fixed;inset:0;z-index:60;background:rgba(3,8,22,.78);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:16px}
+.ov.show{display:flex;animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.modal{position:relative;width:min(880px,100%);max-height:calc(100vh - 32px);overflow:auto;border-radius:18px;background:linear-gradient(170deg,#14306a,#0a1a3e);border:2px solid var(--amber);box-shadow:0 30px 80px rgba(0,0,0,.6);animation:pop .28s cubic-bezier(.2,1.3,.4,1)}
+@keyframes pop{from{transform:scale(.92) translateY(14px);opacity:0}}
+.modal .x{position:absolute;top:12px;right:12px;z-index:3;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(0,0,0,.35);display:grid;place-items:center;font-size:20px}
+.modal .x:hover{background:rgba(0,0,0,.6)}
+.m-grid{display:grid;grid-template-columns:1fr 1fr}
+.pimg{position:relative;min-height:300px;background:radial-gradient(90% 90% at 50% 40%,#ffe39a 0%,#f7b119 45%,#8a5d00 100%);display:grid;place-items:center;color:#2b1d00;overflow:hidden}
+.pimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pimg .i{font-size:130px;stroke-width:1.1}
+.pimg .dummy{position:absolute;left:12px;bottom:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#2b1d00;background:rgba(255,255,255,.55);padding:2px 8px;border-radius:20px}
+.m-body{padding:30px 28px 26px}
+.kicker{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.pill{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:20px;background:var(--amber);color:#111}
+.pill.o{background:transparent;color:var(--amber);border:1px solid var(--amber)}
+.pill.red{background:#3a1010;color:#ffb3b3;border:1px solid #a33}
+.m-body h2{font-family:var(--f-head);font-weight:400;font-size:clamp(22px,3vw,30px);line-height:1.12;margin-bottom:10px}
+.m-body p.d{color:#dbe5ff;font-size:15px;margin-bottom:16px}
+.price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.price .new{font-family:var(--f-head);font-size:clamp(24px,3.4vw,34px);color:var(--amber)}
+.price .old{color:var(--muted);text-decoration:line-through;font-size:17px}
+.valid{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;margin-bottom:20px}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.expired{background:rgba(163,51,51,.18);border:1px solid #a33;border-radius:10px;padding:12px 14px;font-size:14px;color:#ffd0d0;margin-bottom:16px}
+.m-body.dim .price .new{color:#aab}
+.form{display:none;padding:0 28px 28px}
+.modal.form-on .form{display:block}
+.modal.form-on .m-body .actions{display:none}
+.form h3{font-family:var(--f-head);font-weight:400;font-size:20px;margin:6px 0 4px}
+.form .sub{color:var(--muted);font-size:13px;margin-bottom:14px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form label{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.form input[type=text],.form input[type=email],.form input[type=tel]{display:block;width:100%;margin-top:5px;padding:12px 13px;border-radius:9px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.07);color:#fff;font:inherit;font-size:15px;text-transform:none;letter-spacing:0;font-weight:500}
+.form input:focus{outline:none;border-color:var(--amber);background:rgba(255,255,255,.12)}
+.form input.bad{border-color:#ff7b7b}
+.chk{display:flex!important;gap:10px;align-items:flex-start;text-transform:none!important;letter-spacing:0!important;font-weight:500!important;font-size:13px!important;color:#dbe5ff!important}
+.chk input{margin-top:3px;accent-color:var(--amber);width:17px;height:17px}
+.ok{display:none;text-align:center;padding:26px 28px 34px}
+.modal.sent .ok{display:block}
+.modal.sent .form,.modal.sent .m-grid{display:none}
+.ok .i{font-size:54px;color:var(--amber)}
+.ok h3{font-family:var(--f-head);font-weight:400;font-size:26px;margin:10px 0 6px}
+.ok p{color:#dbe5ff}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,30px);opacity:0;pointer-events:none;background:#fff;color:#0a1a3a;font-weight:600;padding:12px 18px;border-radius:10px;z-index:80;transition:.25s;box-shadow:0 10px 30px rgba(0,0,0,.4);display:flex;gap:10px;align-items:center;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* demo sáv */
+.demo{position:fixed;left:12px;bottom:12px;z-index:70;background:#fff;color:#0a1a3a;border-radius:12px;padding:10px 12px;box-shadow:0 10px 30px rgba(0,0,0,.45);font-size:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;max-width:calc(100% - 24px)}
+.demo b{text-transform:uppercase;letter-spacing:.06em;color:#b5820b}
+.demo select{font:inherit;padding:5px 8px;border-radius:6px;border:1px solid #aab}
+
+/* ---------- reszponzív ---------- */
+@media (max-width:1000px){
+  .grid{grid-template-columns:repeat(4,1fr)}
+  .hero .wrap{grid-template-columns:1fr}
+  .hero-art{aspect-ratio:16/9}
+  nav{display:none}
+  .facts .wrap{grid-template-columns:1fr 1fr}
+  .fact:nth-child(3){border-left:0}
+  .fact:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12)}
+}
+@media (max-width:640px){
+  .grid{grid-template-columns:repeat(3,1fr);gap:11px}
+  .door{aspect-ratio:1.55/1}
+  .plate{padding:0 12%;flex-direction:column;justify-content:center;gap:3px}
+  .num{font-size:28px}
+  .m-grid{grid-template-columns:1fr}
+  .pimg{min-height:180px}.pimg .i{font-size:84px}
+  .frow{grid-template-columns:1fr}
+  .top .btn .t{display:none}
+  .top .wrap{gap:10px}
+  .facts .wrap{grid-template-columns:1fr}
+  .fact + .fact{border-left:0;border-top:1px solid rgba(255,255,255,.12)}
+  .fact{justify-content:flex-start;padding:16px 20px}
+  .demo{bottom:8px;left:8px}
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Chemical-Seed">CHEMICAL<b>-</b>SEED</a>
+    <nav aria-label="Főmenü">
+      <a href="https://www.chemicalseed.hu/">Alkatrészek</a>
+      <a href="#naptar">Akciók</a>
+      <a href="#kapcsolat">Kapcsolat</a>
+    </nav>
+    <button class="btn sm" id="topCta" type="button" aria-label="Ajánlatot kérek"><span data-i="mail"></span><span class="t">Ajánlatot kérek</span></button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>24 nap. 24 meglepetés. <em>24 lehetőség a gépedért.</em></h1>
+      <p class="lead">Nyisd ki minden nap az adventi ablakot, és fedezd fel napi alkatrész- és szervizajánlatainkat!</p>
+      <span class="chip"><span data-i="calendar"></span>December 1–24.</span>
+    </div>
+    <div class="hero-art" role="img" aria-label="JCB teleszkópos rakodó téli környezetben">
+      <span data-i="tractor"></span>
+      <small>Hero-kép helye</small>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="naptar" aria-labelledby="rib">
+  <div class="ribbon"><span id="rib"><i data-i="snowflake"></i><em id="ribText" style="font-style:normal">Nyisd ki a mai meglepetést!</em><i data-i="snowflake"></i></span>
+    <div class="count" id="count" aria-live="off"></div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="note">Minden ajánlat csak a megjelölt napon érvényes. A korábbi napok ajánlatait megnézheted, de már nem tudod igényelni.</p>
+</section>
+
+<section class="facts" aria-label="Chemical-Seed röviden">
+  <div class="wrap">
+    <div class="fact"><span data-i="box"></span>Készletről</div>
+    <div class="fact"><span data-i="tractor"></span>JCB · KUHN · JOSKIN</div>
+    <div class="fact"><span data-i="pin"></span>7 telephely</div>
+    <div class="fact"><span data-i="hand"></span>35 éve a gazdák mellett</div>
+  </div>
+</section>
+</main>
+
+<footer id="kapcsolat">
+  <div class="wrap">
+    <strong style="color:#fff">Chemical-Seed Kft.</strong> · Telefon: <a id="footPhone" style="color:var(--amber)" href="#"></a>
+    <div class="sites">
+      <span data-site>Debrecen (központ)</span><span data-site>Újhartyán</span><span data-site>Békés</span><span data-site>Jászfényszaru</span><span data-site>Kaba</span><span data-site>Kaposvár</span><span data-site>Pápa</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Modal -->
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="modal" id="modal">
+    <button class="x" id="mClose" type="button" aria-label="Bezárás" data-i="x"></button>
+    <div class="m-grid">
+      <div class="pimg" id="mImg"></div>
+      <div class="m-body" id="mBody"></div>
+    </div>
+    <form class="form" id="form" novalidate>
+      <h3>Ajánlatkérés</h3>
+      <p class="sub" id="fSub"></p>
+      <div class="frow">
+        <label>Név<input type="text" name="FNAME" autocomplete="name" required></label>
+        <label>Telefonszám<input type="tel" name="PHONE" autocomplete="tel" required></label>
+      </div>
+      <label>E-mail<input type="email" name="EMAIL" autocomplete="email" required></label>
+      <label class="chk"><input type="checkbox" name="GDPR" required><span>Hozzájárulok, hogy a Chemical-Seed Kft. az ajánlatkéréssel kapcsolatban felvegye velem a kapcsolatot. (Adatkezelési tájékoztató – <em>dummy link</em>)</span></label>
+      <div class="actions"><button class="btn" type="submit"><span data-i="mail"></span>Elküldöm</button><button class="btn ghost" type="button" id="fBack">Vissza</button></div>
+    </form>
+    <div class="ok"><span data-i="check"></span><h3>Köszönjük!</h3><p>Ajánlatkérésedet megkaptuk, kollégánk hamarosan jelentkezik.</p></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<div class="demo" id="demo" hidden><b>Bemutató mód</b><label>Ma legyen: <select id="demoSel"></select></label><span>Valós termékfotók, 5 dummy ajtó</span></div>
+
+<script>
+/* =====================  BEÁLLÍTÁSOK  ===================== */
+const CFG = {
+  DEMO: true,                 // ÉLESBEN: false  (elrejti a demo sávot, valós dátumot használ)
+  DEMO_DAY: 13,               // demóban ennyi a "mai nap" (0 = indulás előtt, 25 = vége)
+  YEAR: 2026,
+  PHONE_DISPLAY: '+36 00 000 0000',   // DUMMY – cserélni
+  PHONE_TEL: '+36000000000',
+  MAILCHIMP_ACTION: '',       // Mailchimp űrlap action URL (üres = demó, nem küld)
+  MC: { gdprField:'MMERGE11', gdprValue:'Igen', productField:'MMERGE21', commentField:'MMERGE22', tag:'' },
+  GOATCOUNTER: ''             // pl. 'https://CHSEED.goatcounter.com/count' – éles módban töltődik be
+};
+
+/* =====================  NAPI AJÁNLATOK (DUMMY)  =====================
+   type: 'ar' = akciós ár | '1+1' | 'szerviz'.  img: opcionális kép URL (4:3, 1200×900) */
+const IMG = 'https://www.akciochemicalseed.hu/';   // képek forrása (élesben másold a saját repo-ba)
+const TR = 'Teleszkópos rakodókhoz. Pontos típus- és készletinformációért kérj ajánlatot.';
+const P = [
+ /* 1*/ {t:'ar',  icon:'drop',  brand:'WÜRTH',  name:'WÜRTH féktisztító spray',                    badge:'-23%', price:'850 Ft + ÁFA',     old:'1 100 Ft',   img:'03.jpg', desc:'Fékek és kuplungok gyors, maradékmentes tisztítása műhelyben és a terepen.'},
+ /* 2*/ {t:'ar',  icon:'gear',  brand:'JCB',    name:'JCB Gömbcsukló – teleszkópos rakodókhoz (2004–2026)', badge:'-21%', price:'55 200 Ft + ÁFA', old:'70 010 Ft', sku:'448/17902', img:'10.jpg', desc:TR},
+ /* 3*/ {t:'szerviz',icon:'shield',brand:'JCB', name:'Téli átvizsgálás csomag (dummy)',           badge:'-25%', price:'69 000 Ft + ÁFA',  old:'92 000 Ft',  desc:'Olaj- és szűrőcsere, folyadékszintek, fékek és világítás ellenőrzése – indulásra készen a szezonra.'},
+ /* 4*/ {t:'ar',  icon:'wrench',brand:'JCB',    name:'JCB Koptatóbetét – teleszkópos rakodókhoz (2004–2026)', badge:'-14%', price:'22 150 Ft + ÁFA', old:'25 650 Ft', sku:'402/G1578', img:'14.jpg', desc:TR},
+ /* 5*/ {t:'ar',  icon:'drop',  brand:'JOSKIN', name:'JOSKIN vákum olaj 5 l',                      badge:'-22%', price:'17 500 Ft + ÁFA',  old:'22 500 Ft',  img:'08.jpg', desc:'Vákuumszivattyú-olaj JOSKIN tartálykocsikhoz, 5 literes kiszerelésben.'},
+ /* 6*/ {t:'1+1', icon:'drop',  brand:'Univerzális',name:'Kenőzsír-patron 400 g – 1+1 (dummy)',    badge:'1+1',  price:'1+1 db',           old:'',           desc:'Nagy terhelésű lítiumos kenőzsír. Két darab, egy áron.'},
+ /* 7*/ {t:'ar',  icon:'wrench',brand:'JCB',    name:'JCB TOOLS 18PGG-VS zsírzópisztoly 18 V (akku és töltő nélkül)', badge:'-6%', price:'43 000 Ft + ÁFA', old:'45 720 Ft', sku:'A-38120221', img:'15.jpg', desc:'Akkus zsírzópisztoly a gyors, tiszta kenéshez. Akku és töltő nélkül.'},
+ /* 8*/ {t:'ar',  icon:'check', brand:'JCB',    name:'JCB bögre',                                  badge:'-16%', price:'3 200 Ft + ÁFA',   old:'3 806 Ft',   sku:'JCB2089', img:'jcb2089.jpg', desc:'JCB logós bögre, ajándéknak vagy a műhelybe.'},
+ /* 9*/ {t:'ar',  icon:'lamp',  brand:'JCB',    name:'JCB LED fényszóró szett',                    badge:'-14%', price:'85 000 Ft + ÁFA',  old:'99 000 Ft',  sku:'SIM0027', img:'05.jpg', desc:'LED fényszóró szett a sötét téli reggelekre. Érdeklődj a kompatibilis típusokról.'},
+ /*10*/ {t:'szerviz',icon:'gear', brand:'JCB',   name:'Hidraulika-diagnosztika (dummy)',            badge:'-30%', price:'24 900 Ft + ÁFA',  old:'35 600 Ft',  desc:'Nyomás- és szivárgásvizsgálat, részletes írásos állapotjelentéssel.'},
+ /*11*/ {t:'ar',  icon:'wrench',brand:'JCB',    name:'JCB Fülkebak jobb első – teleszkópos rakodókhoz (2019–2026)', badge:'-31%', price:'61 900 Ft + ÁFA', old:'90 070 Ft', sku:'402/D0647', img:'11.jpg', desc:TR},
+ /*12*/ {t:'ar',  icon:'check', brand:'JCB',    name:'JCB galléros póló – fekete',                 badge:'-13%', price:'9 500 Ft + ÁFA',   old:'10 931 Ft',  img:'jcb3135.jpg', desc:'Fekete JCB galléros póló, munkába és szabadidőre.'},
+ /*13*/ {t:'ar',  icon:'bolt',  brand:'JCB',    name:'JCB Sebesség jeladó – teleszkópos rakodókhoz (2004–2025)', badge:'-30%', price:'47 200 Ft + ÁFA', old:'67 855 Ft', sku:'716/D2729', img:'06.jpg', desc:TR},
+ /*14*/ {t:'ar',  icon:'bolt',  brand:'JCB',    name:'JCB DEF szintadó',                           badge:'-26%', price:'299 000 Ft + ÁFA', old:'402 185 Ft', sku:'320/D9237', img:'09.jpg', desc:'DEF (AdBlue) szintadó JCB gépekhez. A pontos típusról érdeklődj.'},
+ /*15*/ {t:'1+1', icon:'filter',brand:'JCB',    name:'Levegőszűrő – 1+1 (dummy)',                  badge:'1+1',  price:'1+1 db',           old:'',           desc:'Levegőszűrő betét JCB gépekhez: az első szűrő ára mellé a másodikat adjuk.'},
+ /*16*/ {t:'ar',  icon:'wheel', brand:'Michelin',name:'Michelin XMCL 460/70R24 DW14L abroncs – traktormintás', badge:'-35%', price:'280 000 Ft + ÁFA', old:'430 000 Ft', sku:'XMCL460/70R24', img:'13.jpg', desc:'Traktormintás abroncs 460/70R24 méretben.'},
+ /*17*/ {t:'ar',  icon:'wheel', brand:'Ascenso',name:'Ascenso MIR221 500/70R24 PR 164A8/B TL – betonmintás', badge:'-14%', price:'215 000 Ft + ÁFA', old:'250 000 Ft', sku:'8904365504499', img:'04.jpg', desc:'Betonmintás abroncs 500/70R24 méretben.'},
+ /*18*/ {t:'ar',  icon:'wrench',brand:'JOSKIN', name:'JOSKIN Vonófej D50 100–110',                 badge:'-23%', price:'88 000 Ft + ÁFA',  old:'114 000 Ft', sku:'9274007109', img:'01.jpg', desc:'Vonófej JOSKIN pótkocsikhoz és tartálykocsikhoz.'},
+ /*19*/ {t:'szerviz',icon:'gear', brand:'JCB',   name:'Teljes karbantartási csomag (dummy)',        badge:'-22%', price:'118 000 Ft + ÁFA', old:'151 000 Ft', desc:'Olaj, szűrők, kenés, hidraulika és fékek – teljes körű éves karbantartás.'},
+ /*20*/ {t:'ar',  icon:'check', brand:'JCB',    name:'JCB pulóver – fekete',                       badge:'-14%', price:'18 000 Ft + ÁFA',  old:'20 825 Ft',  img:'jcb3110.jpg', desc:'Fekete JCB pulóver hideg reggelekre.'},
+ /*21*/ {t:'ar',  icon:'check', brand:'JCB',    name:'JCB mellény – fekete',                       badge:'-17%', price:'15 000 Ft + ÁFA',  old:'18 113 Ft',  img:'jcb3108.jpg', desc:'Fekete JCB mellény, rétegezéshez.'},
+ /*22*/ {t:'ar',  icon:'wrench',brand:'JCB',    name:'JCB 94 részes szerszámkészlet – króm-vanádium acél', badge:'-9%', price:'Ár: érdeklődj', old:'', sku:'A-38210160', img:'a-38210160.jpg', desc:'94 részes szerszámkészlet króm-vanádium acélból. Az árról érdeklődj ajánlatkéréssel.'},
+ /*23*/ {t:'ar',  icon:'wrench',brand:'JCB',    name:'JCB Pro 18PAG-125 akkus sarokcsiszoló 18 V, 125 mm', badge:'-6%', price:'Ár: érdeklődj', old:'', sku:'A-38140104', img:'07.jpg', desc:'Akkus sarokcsiszoló 125 mm-es tárcsához. Az árról érdeklődj ajánlatkéréssel.'},
+ /*24*/ {t:'ar',  icon:'tractor',brand:'Karácsonyi nagy ajánlat',name:'JCB elektromos gyerekmarkoló', badge:'ZÁRÓ', price:'85 000 Ft + ÁFA',  old:'',           img:'jcb_gyermek_markolo.jpg', desc:'Az adventi naptár záró ajánlata: 12 V / 10 Ah-s elektromos gyerekmarkoló, 2,4 GHz-es távirányítóval.', grand:true}
+];
+const imgSrc = p => p.img ? (/^https?:/.test(p.img) ? p.img : IMG + p.img) : '';
+
+/* =====================  IKONOK (vonalas SVG)  ===================== */
+const ICO = {
+ snowflake:'M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1M9 3.5l3 2 3-2M9 20.5l3-2 3 2',
+ pine:'M12 3l5 6h-3l4 5h-4l3 4H7l3-4H6l4-5H7z M12 18v3',
+ bauble:'M12 2v3M10 5h4v2h-4z M12 8a6 6 0 100 12 6 6 0 000-12z M9 13a3 3 0 013-3',
+ lock:'M5 11h14v9H5z M8 11V8a4 4 0 018 0v3',
+ phone:'M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z',
+ calendar:'M3 5h18v16H3z M16 3v4M8 3v4M3 10h18',
+ mail:'M3 5h18v14H3z M3 7l9 6 9-6',
+ pin:'M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z M12 7.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z',
+ box:'M21 8l-9-5-9 5v8l9 5 9-5z M3 8l9 5 9-5 M12 13v8',
+ tractor:'M3 14V8h8l2 5h5v3 M7 8V4h4 M7 12a4 4 0 100 8 4 4 0 000-8z M18 14a3 3 0 100 6 3 3 0 000-6z M11 16h4',
+ hand:'M2 12l5-4 4 2 3-2 5 3 3-1 M7 8l-1 8 4 3 3-1 M13 18l3 2 3-3-3-6',
+ gear:'M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z',
+ filter:'M6 4h12v16H6z M6 9h12 M6 14h12 M10 2v2M14 2v2',
+ lamp:'M9 18h6M10 21h4M12 3a6 6 0 00-4 10.5c.8.7 1 1.5 1 2.5h6c0-1 .2-1.8 1-2.5A6 6 0 0012 3z',
+ wrench:'M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z',
+ drop:'M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z',
+ battery:'M2 7h17v10H2z M22 11v2 M6 10v4 M10 12h4',
+ wheel:'M12 3a9 9 0 100 18 9 9 0 000-18z M12 9a3 3 0 100 6 3 3 0 000-6z M12 3v6M12 15v6M3 12h6M15 12h6',
+ bolt:'M13 2L4 14h7l-1 8 9-12h-7z',
+ shield:'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M9 12l2 2 4-4',
+ check:'M20 6L9 17l-5-5 M12 2a10 10 0 100 20 10 10 0 000-20z',
+ x:'M18 6L6 18M6 6l12 12',
+ /* vonalas kategória-ikonok – a gep.chemicalseed.hu (KUHN Raktárnullázás) oldalról átvéve */
+ vetogep:'<path d="M12 21v-8"/><path d="M12 13c-3.5 0-6-2.5-6-6 1.5 0 3 .4 4.2 1.3"/><path d="M12 13c3.5 0 6-2.5 6-6-1.5 0-3 .4-4.2 1.3"/><path d="M12 9c0-2.5-1-4.5-2.5-6C11 3 12 4.5 12 6c0-1.5 1-3 2.5-3C13 4.5 12 6.5 12 9Z"/>',
+ talajmuveles:'<path d="M3 8c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0"/><path d="M3 13c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0"/><path d="M3 18c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0"/>',
+ kasza:'<circle cx="12" cy="12" r="2.6"/><path d="M12 3v6.4M12 20.6V14.6M3 12h6.4M14.6 12H21M6.3 6.3l4.2 4.2M13.5 13.5l4.2 4.2M17.7 6.3l-4.2 4.2M10.5 13.5l-4.2 4.2"/>',
+ etetobala:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/><path d="M12 4v5M12 15v5M4 12h5M15 12h5"/>',
+ rendkezeles:'<path d="M4 12a8 8 0 0 1 14.5-4.7"/><path d="M20 12a8 8 0 0 1-14.5 4.7"/><path d="M18.5 3.5v4h-4"/><path d="M5.5 20.5v-4h4"/>',
+ mutragya:'<path d="M12 3v5"/><circle cx="6" cy="17" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="18" cy="17" r="1"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M12 8l-7 7M12 8l7 7M12 8v3"/>'
+};
+const svg = n => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${ICO[n].startsWith('<')?ICO[n]:`<path d="${ICO[n]}"/>`}</svg>`;
+document.querySelectorAll('[data-i]').forEach(el=>{el.insertAdjacentHTML('afterbegin',svg(el.dataset.i));});
+document.querySelectorAll('[data-site]').forEach(el=>el.insertAdjacentHTML('afterbegin',svg('pin')));
+document.getElementById('footPhone').textContent = CFG.PHONE_DISPLAY;
+document.getElementById('footPhone').href = 'tel:'+CFG.PHONE_TEL;
+
+/* =====================  IDŐ (budapesti)  ===================== */
+function bpNow(){
+  const f = new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Budapest',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+  const o={}; f.formatToParts(new Date()).forEach(p=>o[p.type]=p.value);
+  return {y:+o.year,m:+o.month,d:+o.day,h:(+o.hour)%24,mi:+o.minute,s:+o.second};
+}
+function realDay(){
+  const n=bpNow();
+  if(n.y<CFG.YEAR||(n.y===CFG.YEAR&&n.m<12)) return 0;
+  if(n.y===CFG.YEAR&&n.m===12) return n.d>24?25:n.d;
+  return 25;
+}
+let demoDay = (()=>{const r=realDay(); return (r>=1&&r<=24)?r:CFG.DEMO_DAY;})();
+const today = () => CFG.DEMO ? demoDay : realDay();
+const status = d => d===today()?'today':(d<today()?'past':'future');
+
+/* ---- megnyitott ajtók (csak kényelmi, per böngésző) ---- */
+let opened = new Set();
+try{ opened = new Set(JSON.parse(localStorage.getItem('cs-advent-'+CFG.YEAR)||'[]')); }catch(e){}
+const saveOpened = ()=>{ try{localStorage.setItem('cs-advent-'+CFG.YEAR,JSON.stringify([...opened]));}catch(e){} };
+
+/* ---- GoatCounter ---- */
+function gc(path,title){ try{ window.goatcounter && window.goatcounter.count && window.goatcounter.count({path:'advent/'+path,title:title||path,event:true}); }catch(e){} }
+if(!CFG.DEMO && CFG.GOATCOUNTER){
+  const s=document.createElement('script'); s.async=true; s.src='//gc.zgo.at/count.js'; s.dataset.goatcounter=CFG.GOATCOUNTER; document.head.appendChild(s);
+}
+
+/* =====================  RÁCS  ===================== */
+const grid = document.getElementById('grid');
+const DECO = ['snowflake','pine','snowflake','pine','snowflake','bauble'];
+const pad = n => String(n).padStart(2,'0');
+
+function renderGrid(){
+  grid.innerHTML='';
+  for(let d=1; d<=24; d++){
+    const st=status(d), p=P[d-1];
+    const isOpen = (st==='past') || (st==='today' && opened.has(d));
+    const deco = DECO[(d-1)%6];
+    const el=document.createElement('button');
+    el.type='button';
+    el.className=`door ${st}${isOpen?' opened':''}${p.grand?' grand':''}`;
+    el.dataset.d=d;
+    el.setAttribute('aria-label', st==='future' ? `${d}. ajtó – még zárva` : `${d}. ajtó – ${p.name}${st==='past'?' (lejárt)':''}`);
+    el.innerHTML = `
+      ${st==='today'?'<span class="tag-today">Ma</span>':''}
+      <span class="plate"><span class="num">${pad(d)}</span><span class="deco ${deco==='bauble'?'b':deco==='pine'?'p':''}">${svg(deco)}</span></span>
+      <span class="inside"><span class="flap">${d}</span><span class="prod">${p.img?`<img src="${imgSrc(p)}" alt="" loading="lazy">`:svg(p.icon)}</span><span class="badge">${p.badge}</span></span>
+      ${st==='future'?`<span class="lock">${svg('lock')}</span>`:''}`;
+    el.addEventListener('click',()=>onDoor(d,el));
+    grid.appendChild(el);
+  }
+  const t=today(), rt=document.getElementById('ribText');
+  rt.textContent = t===0 ? 'Hamarosan indul – december 1-jén nyílik az első ajtó'
+                 : t>24 ? 'Az adventi naptár véget ért – köszönjük!'
+                 : 'Nyisd ki a mai meglepetést!';
+  tick();
+}
+function onDoor(d,el){
+  const st=status(d);
+  if(st==='future'){
+    el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake');
+    toast(`Ez az ajtó még zárva – december ${d}-én nyílik.`);
+    return;
+  }
+  if(st==='today'){ opened.add(d); saveOpened(); el.classList.add('opened'); }
+  gc('door-'+pad(d)+(st==='past'?'-past':''),'Ajtó '+d);
+  openModal(d,el);
+}
+
+/* =====================  VISSZASZÁMLÁLÁS  ===================== */
+function tick(){
+  const c=document.getElementById('count'), t=today();
+  if(t===0){ c.innerHTML='Indulás: <b>december 1.</b>'; return; }
+  if(t>=24){ c.textContent = t===24 ? 'A mai a záró ajánlat – ne maradj le róla!' : ''; return; }
+  const n=bpNow(); let left=86400-(n.h*3600+n.mi*60+n.s);
+  const h=Math.floor(left/3600), m=Math.floor(left%3600/60), s=left%60;
+  c.innerHTML=`A mai ajánlat még <b>${pad(h)}:${pad(m)}:${pad(s)}</b> ideig érvényes – a következő ajtó (<b>${t+1}.</b>) éjfélkor nyílik.`;
+}
+setInterval(tick,1000);
+
+/* =====================  MODAL  ===================== */
+const ov=document.getElementById('ov'), modal=document.getElementById('modal'), form=document.getElementById('form');
+let curDoor=0, lastFocus=null;
+function openModal(d,from){
+  curDoor=d; lastFocus=from||document.activeElement;
+  const p=P[d-1], past=status(d)==='past';
+  modal.classList.remove('form-on','sent');
+  document.getElementById('mImg').innerHTML = p.img ? `<img src="${imgSrc(p)}" alt="${p.name}">` : svg(p.icon) + '<span class="dummy">Dummy kép</span>';
+  const typeLabel = p.t==='1+1'?'1+1 akció':p.t==='szerviz'?'Szerviz-csomag':'Akciós ár';
+  document.getElementById('mBody').className='m-body'+(past?' dim':'');
+  document.getElementById('mBody').innerHTML = `
+    <div class="kicker"><span class="pill">${d}. nap</span><span class="pill o">${typeLabel}</span>${p.brand?`<span class="pill o">${p.brand}</span>`:''}${p.grand?'<span class="pill">Záró ajánlat</span>':''}${past?'<span class="pill red">Lejárt</span>':''}</div>
+    <h2 id="mTitle">${p.name}</h2>
+    <p class="d">${p.desc}${p.sku?` <span style="color:var(--muted);font-size:13px;white-space:nowrap">Cikkszám: ${p.sku}</span>`:''}</p>
+    <div class="price"><span class="new">${p.price}</span>${p.old?`<span class="old">${p.old}</span>`:''}</div>
+    <div class="valid">${svg('calendar')}<span>${past?`Az ajánlat december ${d}-én volt érvényes.`:`Csak ma érvényes – december ${d}. 23:59-ig.`}</span></div>
+    ${past?`<div class="expired">Ez az ajánlat már lejárt. Nézd meg a mai ajtót, és nyisd ki a mai meglepetést!</div>
+           <div class="actions"><button class="btn" type="button" id="toToday">Ugrás a mai ajtóhoz</button></div>`
+          :`<div class="actions">
+              <button class="btn" type="button" id="reqBtn">${svg('mail')}Ajánlatot kérek</button>
+              <a class="btn ghost" href="tel:${CFG.PHONE_TEL}" data-call>${svg('phone')}${CFG.PHONE_DISPLAY}</a>
+            </div>`}`;
+  document.getElementById('fSub').textContent = `Ajánlat: ${p.name} (${d}. nap, ${p.price})`;
+  const rb=document.getElementById('reqBtn'); if(rb) rb.onclick=()=>{ modal.classList.add('form-on'); gc('door-'+pad(d)+'-form-open'); modal.querySelector('input[name=FNAME]').focus(); };
+  const tt=document.getElementById('toToday'); if(tt) tt.onclick=()=>{ closeModal(); const t=document.querySelector('.door.today'); if(t){t.scrollIntoView({behavior:'smooth',block:'center'}); t.focus({preventScroll:true});} else toast('Ma nincs nyitható ajtó.'); };
+  const call=modal.querySelector('[data-call]'); if(call) call.addEventListener('click',()=>gc('door-'+pad(d)+'-call'));
+  form.reset(); form.querySelectorAll('.bad').forEach(x=>x.classList.remove('bad'));
+  ov.classList.add('show'); document.body.style.overflow='hidden';
+  document.getElementById('mClose').focus();
+}
+function closeModal(){
+  ov.classList.remove('show'); document.body.style.overflow='';
+  renderGrid();
+  if(lastFocus&&lastFocus.focus) { const d=document.querySelector(`.door[data-d="${curDoor}"]`); (d||lastFocus).focus({preventScroll:true}); }
+}
+document.getElementById('mClose').onclick=closeModal;
+ov.addEventListener('mousedown',e=>{ if(e.target===ov) closeModal(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&ov.classList.contains('show')) closeModal(); });
+document.getElementById('fBack').onclick=()=>modal.classList.remove('form-on');
+document.getElementById('topCta').onclick=()=>{
+  const t=today();
+  if(t>=1&&t<=24){ openModal(t,document.getElementById('topCta')); document.getElementById('reqBtn').click(); }
+  else toast('Az ajánlatkérés az adventi időszakban, a napi ajtókon keresztül érhető el.');
+};
+
+/* ---- űrlap ---- */
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  let ok=true;
+  form.querySelectorAll('input[required]').forEach(i=>{
+    const bad = i.type==='checkbox' ? !i.checked : (!i.value.trim() || (i.type==='email' && !/^\S+@\S+\.\S+$/.test(i.value)));
+    i.classList.toggle('bad',bad); if(bad) ok=false;
+  });
+  if(!ok){ toast('Kérjük, töltsd ki a kötelező mezőket.'); return; }
+  const p=P[curDoor-1];
+  if(CFG.MAILCHIMP_ACTION){
+    // Mailchimp klasszikus beágyazott űrlap-küldés rejtett iframe-be
+    const f=document.createElement('form'); f.method='POST'; f.action=CFG.MAILCHIMP_ACTION; f.target='mcFrame'; f.style.display='none';
+    const add=(n,v)=>{const i=document.createElement('input');i.type='hidden';i.name=n;i.value=v;f.appendChild(i);};
+    add('FNAME',form.FNAME.value); add('EMAIL',form.EMAIL.value); add('PHONE',form.PHONE.value);
+    add(CFG.MC.gdprField,CFG.MC.gdprValue);
+    add(CFG.MC.productField,`Advent ${curDoor}. nap – ${p.name}`);
+    if(CFG.MC.tag) add('tags',CFG.MC.tag);
+    let fr=document.getElementById('mcFrame'); if(!fr){fr=document.createElement('iframe');fr.name=fr.id='mcFrame';fr.style.display='none';document.body.appendChild(fr);}
+    document.body.appendChild(f); f.submit(); setTimeout(()=>f.remove(),1500);
+  }
+  gc('door-'+pad(curDoor)+'-lead');
+  modal.classList.remove('form-on'); modal.classList.add('sent');
+});
+
+/* ---- toast ---- */
+let tt; function toast(msg){ const t=document.getElementById('toast'); t.innerHTML=svg('lock')+'<span></span>'; t.lastChild.textContent=msg; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2600); }
+
+/* ---- demó sáv ---- */
+if(CFG.DEMO){
+  const bar=document.getElementById('demo'), sel=document.getElementById('demoSel'); bar.hidden=false;
+  sel.innerHTML='<option value="0">nov. 30. (indulás előtt)</option>'+Array.from({length:24},(_,i)=>`<option value="${i+1}">dec. ${i+1}.</option>`).join('')+'<option value="25">dec. 25. (vége)</option>';
+  sel.value=demoDay;
+  sel.onchange=()=>{ demoDay=+sel.value; renderGrid(); };
+}
+renderGrid();
+</script>
+</body>
+</html>
