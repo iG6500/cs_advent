@@ -227,7 +227,7 @@ footer .sites .i{color:var(--amber)}
       <a href="#naptar">Akciók</a>
       <a href="#kapcsolat">Kapcsolat</a>
     </nav>
-    <button class="btn sm" id="topCta" type="button" aria-label="Ajánlatot kérek"><span data-i="mail"></span><span class="t">Ajánlatot kérek</span></button>
+    <button class="btn sm" id="topCta" type="button" aria-label="Kérem a napi ajándékot"><span data-i="mail"></span><span class="t">Kérem a napi ajándékot</span></button>
   </div>
 </header>
 
@@ -477,7 +477,7 @@ function openModal(d,from){
     ${past?`<div class="expired">Ez az ajánlat már lejárt. Nézd meg a mai ajtót, és nyisd ki a mai meglepetést!</div>
            <div class="actions"><button class="btn" type="button" id="toToday">Ugrás a mai ajtóhoz</button></div>`
           :`<div class="actions">
-              <button class="btn" type="button" id="reqBtn">${svg('mail')}Ajánlatot kérek</button>
+              <button class="btn" type="button" id="reqBtn">${svg('mail')}Ezt szeretném</button>
               <a class="btn ghost" href="tel:${CFG.PHONE_TEL}" data-call>${svg('phone')}${CFG.PHONE_DISPLAY}</a>
             </div>`}`;
   document.getElementById('fSub').textContent = `Ajánlat: ${p.name} (${d}. nap, ${p.price})`;
