@@ -508,7 +508,6 @@ footer .sites .i{color:var(--amber)}
 /* ---------- reszponzív ---------- */
 @media (max-width:1000px){
   .grid{grid-template-columns:repeat(4,1fr)}
-  nav{display:none}
   .facts .wrap{grid-template-columns:1fr 1fr}
   .fact:nth-child(3){border-left:0}
   .fact:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12)}
@@ -522,7 +521,6 @@ footer .sites .i{color:var(--amber)}
   .m-grid{grid-template-columns:1fr}
   .pimg{min-height:180px}.pimg .i{font-size:84px}
   .frow{grid-template-columns:1fr}
-  .top .btn .t{display:none}
   .top .wrap{gap:10px}
   .facts .wrap{grid-template-columns:1fr}
   .fact + .fact{border-left:0;border-top:1px solid rgba(255,255,255,.12)}
@@ -537,12 +535,6 @@ footer .sites .i{color:var(--amber)}
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#" aria-label="Chemical-Seed">CHEMICAL<b>-</b>SEED</a>
-    <nav aria-label="Főmenü">
-      <a href="https://www.chemicalseed.hu/">Alkatrészek</a>
-      <a href="#naptar">Akciók</a>
-      <a href="#kapcsolat">Kapcsolat</a>
-    </nav>
-    <button class="btn sm" id="topCta" type="button" aria-label="Ajánlatot kérek"><span data-i="mail"></span><span class="t">Ajánlatot kérek</span></button>
   </div>
 </header>
 
@@ -836,11 +828,7 @@ document.getElementById('mClose').onclick=closeModal;
 ov.addEventListener('mousedown',e=>{ if(e.target===ov) closeModal(); });
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&ov.classList.contains('show')) closeModal(); });
 document.getElementById('fBack').onclick=()=>modal.classList.remove('form-on');
-document.getElementById('topCta').onclick=()=>{
-  const t=today();
-  if(t>=1&&t<=24){ openModal(t,document.getElementById('topCta')); document.getElementById('reqBtn').click(); }
-  else toast('Az ajánlatkérés az adventi időszakban, a napi ajtókon keresztül érhető el.');
-};
+
 
 /* ---- űrlap ---- */
 form.addEventListener('submit',e=>{
