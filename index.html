@@ -782,7 +782,7 @@ function openModal(d,from){
   curDoor=d; lastFocus=from||document.activeElement;
   const p=P[d-1], past=status(d)==='past';
   modal.classList.remove('form-on','sent'); modal.classList.toggle('gift',!!p.gift&&!past);
-  document.getElementById('mImg').innerHTML = svg(p.icon) + '<span class="dummy">Fotó hamarosan</span>' + (p.img ? `<img src="${imgSrc(p)}" alt="${p.name}" onerror="this.remove()">` : '');
+  document.getElementById('mImg').innerHTML = svg(p.icon) + (p.img ? `<img src="${imgSrc(p)}" alt="${p.name}" onerror="this.remove()">` : '');
   const typeLabel = p.t==='sale'?'Napi kedvezmény':p.t==='menny'?'Mennyiségi akció':'Akciós ár';
   document.getElementById('mBody').className='m-body'+(past?' dim':'');
   document.getElementById('mBody').innerHTML = `
