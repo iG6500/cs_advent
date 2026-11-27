@@ -398,6 +398,7 @@ h1 em{font-style:normal;color:var(--amber);display:block}
 .selbar{position:fixed;left:50%;bottom:16px;transform:translate(-50%,140%);z-index:45;display:flex;align-items:center;gap:12px;background:#0e2250;border:1.5px solid var(--amber);border-radius:14px;padding:10px 12px 10px 16px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .25s;max-width:calc(100vw - 24px)}
 .selbar.show{transform:translate(-50%,0)}
 .selbar .sc{font-weight:800}.selbar .clr{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font:inherit;font-size:13px}
+.inc{display:flex;gap:10px;align-items:flex-start;margin:0 0 14px;padding:10px 12px;border:1.5px dashed var(--amber);border-radius:10px;background:rgba(247,177,25,.08);font-size:14px;cursor:pointer}.inc input{margin-top:3px;accent-color:var(--amber);width:18px;height:18px;flex:none}
 .sellist{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:8px}
 .sellist li{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(255,255,255,.04)}
 .sellist .t{flex:1;min-width:0;font-weight:700;font-size:14px}.sellist .t small{display:block;font-weight:400;color:var(--muted)}
@@ -627,7 +628,7 @@ footer .sites .i{color:var(--amber)}
 
 <footer id="kapcsolat">
   <div class="wrap">
-    <strong style="color:#fff">Chemical-Seed Kft.</strong> · Telefon: <a id="footPhone" style="color:var(--amber)" href="#"></a>
+    <strong style="color:#fff">Chemical-Seed Kft.</strong> · Telefon: <a id="footPhone" style="color:var(--amber)" href="#"></a> · <a href="https://chemicalseed.hu/adatvedelmi-tajekoztato" target="_blank" rel="noopener" style="color:var(--amber)">Adatkezelési tájékoztató</a>
     <div class="sites">
       <span data-site>Debrecen (központ)</span><span data-site>Újhartyán</span><span data-site>Békés</span><span data-site>Jászfényszaru</span><span data-site>Kaba</span><span data-site>Kaposvár</span><span data-site>Pápa</span>
     </div>
@@ -650,7 +651,7 @@ footer .sites .i{color:var(--amber)}
         <label>Telefonszám<input type="tel" name="PHONE" autocomplete="tel" required></label>
       </div>
       <label>E-mail<input type="email" name="EMAIL" autocomplete="email" required></label>
-      <label class="chk"><input type="checkbox" name="GDPR" required><span>Hozzájárulok, hogy a Chemical-Seed Kft. az ajánlatkéréssel kapcsolatban felvegye velem a kapcsolatot. (Adatkezelési tájékoztató – <em>dummy link</em>)</span></label>
+      <label class="chk"><input type="checkbox" name="GDPR" required><span>Hozzájárulok, hogy a Chemical-Seed Kft. az ajánlatkéréssel kapcsolatban felvegye velem a kapcsolatot. (<a href="https://chemicalseed.hu/adatvedelmi-tajekoztato" target="_blank" rel="noopener" style="color:var(--amber)">Adatkezelési tájékoztató</a>)</span></label>
       <div class="actions"><button class="btn" type="submit"><span data-i="mail"></span>Elküldöm</button><button class="btn ghost" type="button" id="fBack">Vissza</button></div>
     </form>
     <div class="ok"><span data-i="check"></span><h3>Köszönjük!</h3><p>Ajánlatkérésedet megkaptuk, kollégánk hamarosan jelentkezik.</p></div>
@@ -846,12 +847,13 @@ function openModal(d,from){
     ${p.gift?`<div class="giftcard"><span class="gi">${svg('gift')}${p.gift.img?`<img src="${imgSrc(p.gift)}" alt="" onerror="this.remove()">`:''}</span><div><b>+ Ajándék</b><span>${p.gift.name}${p.gift.pkg?'*':''}</span>${past?'':`<small>${p.gift.note}</small>`}${p.gift.pkg?`<small class="fn">* Az ajándékcsomag tartalma: ${GIFT_PKG}</small>`:''}</div></div>`:''}
     ${past?`<div class="expired">${svg('lock')}<span>Ez az ajánlat december ${d}-én lejárt.</span></div>
            ${today()>=1&&today()<=24?`<div class="actions"><button class="btn" type="button" id="toToday">Ugrás a mai ajtóhoz</button></div>`:''}`
-          :`<div class="actions">
+          :`${incMerchBox()}<div class="actions">
               <button class="btn" type="button" id="reqBtn">${svg('mail')}${p.gift?'Megrendelem':'Ajánlatot kérek'}</button>
               <a class="btn ghost" href="tel:${CFG.PHONE_TEL}" data-call>${svg('phone')}${CFG.PHONE_DISPLAY}</a>
             </div>`}`;
   document.querySelector('#form h3').textContent = p.gift?'Megrendelés':'Ajánlatkérés';
   document.getElementById('fSub').textContent = `${p.gift?'Megrendelés':'Ajánlat'}: ${p.name} (${d}. nap, ${p.price})${p.gift?' + ajándék: '+p.gift.name:''}`;
+  wireInc(document.getElementById('fSub').textContent);
   const rb=document.getElementById('reqBtn'); if(rb) rb.onclick=()=>{ modal.classList.add('form-on'); gc('door-'+pad(d)+'-form-open'); modal.querySelector('input[name=FNAME]').focus(); };
   const tt=document.getElementById('toToday'); if(tt) tt.onclick=()=>{ closeModal(); const t=document.querySelector('.door.today'); if(t){t.scrollIntoView({behavior:'smooth',block:'center'}); t.focus({preventScroll:true});} else toast('Ma nincs nyitható ajtó.'); };
   const call=modal.querySelector('[data-call]'); if(call) call.addEventListener('click',()=>gc('door-'+pad(d)+'-call'));
@@ -868,6 +870,23 @@ function closeModal(){
 /* =====================  MERCH (JCB ajándékok)  ===================== */
 const MERCH = [{"g": "Játék", "name": "JCB játék dömper", "sku": "JCB1653", "info": "18 × 13,3 × 12,5 cm", "price": "5.000 Ft + ÁFA", "old": "", "badge": "", "img": "jcb1653"}, {"g": "Játék", "name": "JCB játék rakodó", "sku": "JCB1654", "info": "18 × 13,3 × 12,5 cm", "price": "5.000 Ft + ÁFA", "old": "", "badge": "", "img": "jcb1654"}, {"g": "Játék", "name": "JCB Monster Truck", "sku": "JCB3608", "info": "Rendelésre", "price": "6.000 Ft + ÁFA", "old": "", "badge": "", "img": "jcb3608"}, {"g": "Játék", "name": "JCB játék csavarozókészlet", "sku": "JCB1657", "info": "", "price": "9.000 Ft + ÁFA", "old": "", "badge": "", "img": "jcb1657"}, {"g": "Játék", "name": "JCB pedálos traktor homlokrakodóval és pótkocsival", "sku": "R02383", "info": "Korosztály: 2-5 évesek · Magasság: 92-128 cm", "price": "60.000 Ft + ÁFA", "old": "", "badge": "", "img": "r02383"}, {"g": "Játék", "name": "JCB elektromos gyerekmarkoló", "sku": "JCB_gyermek_markolo", "info": "12 V / 10 Ah · 2,4 GHz-es távirányító · Max. terhelhetőség: 30 kg · Menetidő: 1-1,5 óra · Korosztály: 2-4 évesek", "price": "85.000 Ft + ÁFA", "old": "", "badge": "", "img": "jcb_gyermek_markolo"}, {"g": "Játék", "name": "JCB gyermek dömper", "sku": "R13564", "info": "Korosztály: 1,5 évesek · Magasság: 68-104 cm", "price": "30.000 Ft + ÁFA", "old": "", "badge": "", "img": "r13564"}, {"g": "Játék", "name": "JCB Daisy plüss maci", "sku": "JCB3467", "info": "", "price": "10.500 Ft + ÁFA", "old": "11.500 Ft", "badge": "-9%", "img": "jcb3467"}, {"g": "Játék", "name": "JCB Digby plüss maci", "sku": "JCB3571", "info": "", "price": "12.000 Ft + ÁFA", "old": "13.000 Ft", "badge": "-8%", "img": "jcb3571"}, {"g": "Ruházat", "name": "JCB Sapka — gyerek", "sku": "JCB3203", "info": "", "price": "4.800 Ft + ÁFA", "old": "5.250 Ft", "badge": "-9%", "img": "jcb3203"}, {"g": "Ruházat", "name": "JCB Kötött sapka — felnőtt", "sku": "JCB1610", "info": "", "price": "1.850 Ft + ÁFA", "old": "2.250 Ft", "badge": "-18%", "img": "jcb1610"}, {"g": "Ruházat", "name": "JCB női softshell mellény", "sku": "JCB3502", "info": "Méret: S, M, L", "price": "7.000 Ft + ÁFA", "old": "", "badge": "", "img": "jcb3502"}, {"g": "Ruházat", "name": "JCB sapka", "sku": "JCB1848", "info": "", "price": "2.550 Ft + ÁFA", "old": "3.281 Ft", "badge": "-22%", "img": "jcb1848"}, {"g": "Ruházat", "name": "JCB overál", "sku": "JCB3531", "info": "Egyedi rendelésre; a méretekről érdeklődj!", "price": "30.000 Ft + ÁFA", "old": "", "badge": "", "img": "jcb3531"}, {"g": "Ruházat", "name": "JCB téli készlet", "sku": "JCB3638", "info": "Egy méret, rendelésre", "price": "6.000 Ft + ÁFA", "old": "", "badge": "", "img": "jcb3638"}, {"g": "Ruházat", "name": "JCB galléros póló — fekete", "sku": "JCB3135", "info": "Méret: M, L, XL, XXL", "price": "9.500 Ft + ÁFA", "old": "10.931 Ft", "badge": "-13%", "img": "jcb3135"}, {"g": "Ruházat", "name": "JCB póló — fekete", "sku": "JCB1827", "info": "Méret: S, M, L, XL, XXL, 3 XL", "price": "7.000 Ft + ÁFA", "old": "8.313 Ft", "badge": "-16%", "img": "jcb1827"}, {"g": "Ruházat", "name": "JCB pulóver — fekete", "sku": "JCB3110", "info": "Méret: S, M, L, XL, XXL, 3 XL", "price": "18.000 Ft + ÁFA", "old": "20.825 Ft", "badge": "-14%", "img": "jcb3110"}, {"g": "Ruházat", "name": "JCB mellény — fekete", "sku": "JCB3108", "info": "Méret: S, M, L, XXL", "price": "15.000 Ft + ÁFA", "old": "18.113 Ft", "badge": "-17%", "img": "jcb3108"}, {"g": "Ajándék", "name": "JCB bögre", "sku": "JCB2089", "info": "", "price": "3.200 Ft + ÁFA", "old": "3.806 Ft", "badge": "-16%", "img": "jcb2089"}, {"g": "Ajándék", "name": "JCB bevásárlótáska", "sku": "JCB117F", "info": "", "price": "800 Ft + ÁFA", "old": "1.081 Ft", "badge": "-26%", "img": "jcb117f"}, {"g": "Ajándék", "name": "JCB gumicsizmatároló", "sku": "JCB3456", "info": "Egy méret, fekete", "price": "4.000 Ft + ÁFA", "old": "", "badge": "", "img": "jcb3456"}];
 let curMerch=null, mFilter='all';
+const mi=i=>MERCH[i].name+' ('+MERCH[i].sku+')';
+const doorStr=d=>{const q=P[d-1]; return `Advent ${d}. nap – ${q.name}${q.gift?' + ajándék: '+q.gift.name:''}`;};
+const inc=id=>{const e=document.getElementById(id); return !!(e&&e.checked);};
+function leadParts(){
+  const parts=[];
+  if(curMerch==='sel') parts.push('Merch – '+[...msel].map(mi).join('; '));
+  else if(curMerch!==null) parts.push('Merch – '+mi(curMerch));
+  else parts.push(doorStr(curDoor));
+  if(curMerch!==null && inc('incD')) parts.push(doorStr(today()));
+  if(curMerch===null && inc('incM')) parts.push('Merch – '+[...msel].map(mi).join('; '));
+  return parts;
+}
+function incDoorBox(){ const t=today(); if(!(t>=1&&t<=24)) return ''; const q=P[t-1];
+  return `<label class="inc"><input type="checkbox" id="incD"><span>A mai napi ajánlatot is kérem: <b>${q.name}</b>${q.gift?' + ajándék':''}</span></label>`; }
+function incMerchBox(){ if(!msel.size) return '';
+  return `<label class="inc"><input type="checkbox" id="incM" checked><span>A kiválasztott merch termékeket is kérem (${msel.size} db)</span></label>`; }
+function wireInc(base){ const upd=()=>{ document.getElementById('fSub').textContent = leadParts().length>1?'Együtt kérve: '+leadParts().join(' + '):base; }; modal.querySelectorAll('.inc input').forEach(c=>c.onchange=upd); upd(); }
 function renderMerch(){
   const g=document.getElementById('mgrid'); g.innerHTML='';
   MERCH.forEach((m,i)=>{
@@ -913,11 +932,13 @@ function openMerch(i,from){
     <div class="price"><span class="new">${m.price}</span>${m.old?`<span class="oldw"><span class="old">${m.old}</span> <span class="lp">listaár</span></span>`:''}</div>
     ${m.info?`<div class="valid">${svg('check')}<span>${m.info}</span></div>`:''}
     <div class="valid">${svg('calendar')}<span>Készlet erejéig, december 31-ig. Rendelésre érkező termék: 7–15 munkanap.</span></div>
+    ${incDoorBox()}
     <div class="actions">
       <button class="btn" type="button" id="reqBtn">${svg('mail')}Ezt kérem</button>
       <button class="btn ghost" type="button" id="addBtn">${msel.has(i)?'Kivétel a listából':'+ Több terméket is kérek'}</button>
       <a class="btn ghost" href="tel:${CFG.PHONE_TEL}" data-call>${svg('phone')}${CFG.PHONE_DISPLAY}</a>
     </div>`;
+  wireInc(`Kért termék: ${m.name} (${m.sku}, ${m.price})`);
   document.getElementById('addBtn').onclick=()=>{ if(msel.has(i)){ toggleSel(i); closeModal(); } else { toggleSel(i); closeModal(); toast('Hozzáadva. Válassz még termékeket, majd nyomd meg az „Ezeket kérem” gombot.'); } };
   document.getElementById('fSub').textContent = `Kért termék: ${m.name} (${m.sku}, ${m.price})`;
   document.getElementById('reqBtn').onclick=()=>{ modal.classList.add('form-on'); gc('merch-'+m.sku.toLowerCase()+'-form-open'); modal.querySelector('input[name=FNAME]').focus(); };
@@ -938,11 +959,13 @@ function openSel(from){
     <h2 id="mTitle">Kiválasztott termékek</h2>
     <ul class="sellist">${ids.map(i=>`<li><span class="t">${MERCH[i].name}<small>${MERCH[i].sku} · ${MERCH[i].price}</small></span><button type="button" data-rm="${i}" aria-label="Eltávolítás: ${MERCH[i].name}">×</button></li>`).join('')}</ul>
     <div class="valid">${svg('calendar')}<span>Készlet erejéig, december 31-ig. Rendelésre érkező termék: 7–15 munkanap.</span></div>
+    ${incDoorBox()}
     <div class="actions">
       <button class="btn" type="button" id="reqBtn">${svg('mail')}Ezeket kérem</button>
       <a class="btn ghost" href="tel:${CFG.PHONE_TEL}" data-call>${svg('phone')}${CFG.PHONE_DISPLAY}</a>
     </div>`;
   document.getElementById('fSub').textContent = 'Kért termékek: '+ids.map(i=>MERCH[i].name+' ('+MERCH[i].sku+')').join(', ');
+  wireInc(document.getElementById('fSub').textContent);
   modal.querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{ toggleSel(+b.dataset.rm); if(!msel.size){ closeModal(); } else openSel(lastFocus); });
   document.getElementById('reqBtn').onclick=()=>{ modal.classList.add('form-on'); gc('merch-lista-form-open'); modal.querySelector('input[name=FNAME]').focus(); };
   modal.querySelector('[data-call]').addEventListener('click',()=>gc('merch-lista-call'));
@@ -968,19 +991,20 @@ form.addEventListener('submit',e=>{
   });
   if(!ok){ toast('Kérjük, töltsd ki a kötelező mezőket.'); return; }
   const isM=curMerch!==null, mm=curMerch==='sel'?null:(isM?MERCH[curMerch]:null), selIds=curMerch==='sel'?[...msel]:[], p=isM?null:P[curDoor-1];
+  const parts=leadParts(), clearSel=(curMerch==='sel')||(curMerch===null&&inc('incM'));
   if(CFG.MAILCHIMP_ACTION){
     // Mailchimp klasszikus beágyazott űrlap-küldés rejtett iframe-be
     const f=document.createElement('form'); f.method='POST'; f.action=CFG.MAILCHIMP_ACTION; f.target='mcFrame'; f.style.display='none';
     const add=(n,v)=>{const i=document.createElement('input');i.type='hidden';i.name=n;i.value=v;f.appendChild(i);};
     add('FNAME',form.FNAME.value); add('EMAIL',form.EMAIL.value); add('PHONE',form.PHONE.value);
     add(CFG.MC.gdprField,CFG.MC.gdprValue);
-    add(CFG.MC.productField, curMerch==='sel'?'Merch – '+selIds.map(i=>MERCH[i].name+' ('+MERCH[i].sku+')').join('; '):mm?`Merch – ${mm.name} (${mm.sku})`:`Advent ${curDoor}. nap – ${p.name}${p.gift?' + ajándék: '+p.gift.name:''}`);
+    add(CFG.MC.productField, parts.join(' | '));
     if(CFG.MC.tag) add('tags',CFG.MC.tag);
     let fr=document.getElementById('mcFrame'); if(!fr){fr=document.createElement('iframe');fr.name=fr.id='mcFrame';fr.style.display='none';document.body.appendChild(fr);}
     document.body.appendChild(f); f.submit(); setTimeout(()=>f.remove(),1500);
   }
   gc(curMerch==='sel'?'merch-lista-lead':mm?'merch-'+mm.sku.toLowerCase()+'-lead':'door-'+pad(curDoor)+'-lead');
-  if(curMerch==='sel'){ msel.clear(); }
+  if(clearSel){ msel.clear(); }
   modal.classList.remove('form-on'); modal.classList.add('sent');
 });
 
