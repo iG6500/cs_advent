@@ -1,14 +1,14 @@
 # Chemical-Seed adventi naptár
 
-> Online adventi akció a Chemical-Seed Kft.-től: december 1–24. között minden nap egy új ajtó nyílik, mögötte aznapi alkatrész- vagy szervizajánlattal JCB, KUHN és JOSKIN gépekhez.
+> Online adventi akció a Chemical-Seed Kft.-től: december 1–24. között minden nap egy új ajtó nyílik, mögötte aznapi alkatrész- vagy szervizajánlattal JCB gépekhez (gyári JCB alkatrészek).
 
 ## Röviden
 - Időszak: 2026. december 1–24.
 - Működés: naponta csak az aznapi ajtó nyitható; a korábbi napok ajánlatai megtekinthetők, de már nem igényelhetők; a következő ajtó éjfélkor (Europe/Budapest) nyílik.
-- Ajánlat-típusok: akciós nettó ár, mennyiségi kedvezmény, napi százalékos kedvezmény az összes aznap rendelt termékre (2 nap); piros ajtó = a termék megrendelése mellé ajándék is jár, amíg a készlet tart. Az árak nettó árak (+ ÁFA).
+- Ajánlat-típusok: akciós nettó ár, mennyiségi kedvezmény, napi százalékos kedvezmény az összes aznap rendelt termékre (2 nap). Az árak nettó árak (+ ÁFA).
 - Érvényesség: az ajánlat az adott nap 23:59-ig érvényes.
 - Igénylés: ajánlatkérő űrlap vagy telefon.
-- Márkák: JCB, KUHN, JOSKIN (hivatalos képviselet).
+- Márka: JCB (gyári alkatrészek).
 - Telephelyek (7): Debrecen (központ), Újhartyán, Békés, Jászfényszaru, Kaba, Kaposvár, Pápa.
 - Nyelv: magyar.
 
